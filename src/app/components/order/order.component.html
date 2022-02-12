@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-12">
+    <h2 class="f-right">Numero de orden: {{order?.number}}</h2>
+  </div>
+</div>
+<mat-divider class="mb-2"></mat-divider>
+<ng-container *ngIf="!showForm">
+  <div class="row">
+    <div class="col-4" *ngFor="let item of items">
+      <mat-card>
+        <mat-card-title-group>
+          <mat-card-title>{{item.name}}</mat-card-title>
+          <mat-card-subtitle>SKU: {{item.sku}}</mat-card-subtitle>
+        </mat-card-title-group>
+        <mat-card-content>
+          <p>
+            <span>Cantidad <strong>{{item.quantity}}</strong></span>
+          </p>
+          <p>
+            <span>Precio <strong>{{item.price | currency}}</strong></span>
+          </p>
+          <p>
+            id <strong>{{item.id}}</strong>
+          </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <div class="add-item">
+    <button mat-raised-button (click)="this.showForm = true" color="primary" class="f-right">Agregar</button>
+    <button mat-raised-button (click)="pay()" color="accent" class="f-right">Pagar</button>
+  </div>
+</ng-container>
+<ng-container *ngIf="showForm">
+  <div class="row">
+    <h2>Agregar nuevo producto</h2>
+  </div>
+  <form class="row" [formGroup]="itemForm">
+    <div class='col-sm-12 col-md-6 col-xl-6'>
+      <mat-form-field>
+        <mat-label>SKU *</mat-label>
+        <input matInput formControlName="sku" placeholder="SKU">
+        <mat-error *ngIf="itemForm.controls.sku.invalid">Campo requerido</mat-error>
+      </mat-form-field>
+    </div>
+    <div class='col-sm-12 col-md-6 col-xl-6'>
+      <mat-form-field>
+        <mat-label>Nombre *</mat-label>
+        <input matInput formControlName="name" placeholder="Nombre">
+        <mat-error *ngIf="itemForm.controls.name.invalid">Campo requerido</mat-error>
+      </mat-form-field>
+    </div>
+    <div class='col-sm-12 col-md-6 col-xl-6'>
+      <mat-form-field>
+        <mat-label>Cantidad *</mat-label>
+        <input type="number" matInput formControlName="quantity" placeholder="Cantidad">
+        <mat-error *ngIf="itemForm.controls.quantity.invalid">Campo requerido</mat-error>
+      </mat-form-field>
+    </div>
+    <div class='col-sm-12 col-md-6 col-xl-6'>
+      <mat-form-field>
+        <mat-label>Precio *</mat-label>
+        <input matInput formControlName="price" placeholder="Precio">
+        <mat-error *ngIf="itemForm.controls.price.invalid">Campo requerido</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-12">
+      <button type="button" (click)="addItem()" mat-raised-button color="primary" class="f-right mr-2">Agregar</button>
+      <button type="button" (click)="this.showForm = false" mat-raised-button color="warn" class="f-right mr-2">Cancelar</button>
+    </div>
+  </form>
+</ng-container>
